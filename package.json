@@ -1,0 +1,42 @@
+{
+  "name": "ssmd",
+  "version": "1.0.1",
+  "description": "Speech Synthesis Markdown (SSMD) is a lightweight alternative syntax for Speech Synthesis Markup Language (SSML)",
+  "main": "index.js",
+  "scripts": {
+    "test-unit": "NODE_ENV=test mocha --require co-mocha './src/**/*.spec.js'",
+    "test-watch": "NODE_ENV=test mocha --watch --require co-mocha './src/**/*.spec.js'",
+    "test": "npm run test-unit"
+  },
+  "keywords": [
+    "SSMD",
+    "SSML",
+    "markdown"
+  ],
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "simple-text-parser": "^1.0.0",
+    "ssml-builder": "^0.4.3"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "co-mocha": "1.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.13.0",
+    "markdown": "^0.5.0",
+    "mocha": "2.5.3",
+    "sinon": "1.17.4",
+    "sinon-chai": "2.8.0"
+  },
+  "author": "Fabien Lenoir",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabien88/ssmd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fabien88/ssmd/issues"
+  },
+  "homepage": "https://github.com/fabien88/ssmd#readme"
+}
