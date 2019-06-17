@@ -12,6 +12,7 @@ SSMD is mapped to SSML using the following rules.
 - [Paragraph](#paragraph)
 - [Prosody](#prosody)
 - [Say-as](#say-as)
+- [Audio](#audio)
 - [Extensions](#extensions)
 
 ---
@@ -212,6 +213,32 @@ SSML:
 ```html
 <s>telephone number is <say-as interpret-as='telephone'>+49 123456</say-as>.</s>
 <s>You can't say <say-as interpret-as='expletive'>fuck</say-as> on television.</s>
+```
+
+---
+
+### Audio
+
+Audio
+
+Syntax :  [description of sound](urlOfSound.mp3 alternative text)
+Description text is used for display 
+Following the url, an alternate text may be provided in case the file is not readable
+
+SSMD:
+
+```
+Here's a fun sound [boing](https://example.com/sounds/boing.mp3)
+[a cat purring](cat_purr_close.ogg Purr (sound didn't load))
+[](miaou.mp3)
+```
+
+SSML:
+
+```html
+<s>Here's a fun sound <audio src="https://example.com/sounds/boing.mp3"><desc>boing</desc></audio></s>
+<s><audio src="cat_purr_close.ogg"><desc>a cat purring</desc>Purr (sound didn't load)</audio></s>
+<s><audio src="miaou.mp3"></audio></s>
 ```
 
 ---
