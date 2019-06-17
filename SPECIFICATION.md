@@ -92,17 +92,21 @@ SSMD:
 ```
 First prepare the ingredients.
 Don't forget to wash them first.
-
+\n
 Lastly mix them all together.
-
+\n
 Don't forget to do the dishes after!
 ```
 
 SSML:
 
 ```html
-<p>First prepare the ingredients.
-Don't forget to wash them first.</p><p>Lastly mix them all together.</p><p>Don't forget to do the dishes after!</p>
+<p><s>First prepare the ingredients.</s>
+<s>Don't forget to wash them first.</s></p>
+\n
+<p>Lastly mix them all together.</p>
+\n
+<p>Don't forget to do the dishes after!</p>
 ```
 
 ---
@@ -126,64 +130,50 @@ SSMD:
 
 ```
 Volume:
-
 ~silent~
 --extra soft--
 -soft-
 medium
 +loud+
 ++extra loud++
-
 Rate:
-
 <<extra slow<<
 <slow<
 medium
->fast>
->>extra fast>>
-
+fast: >fast>
+extra fast: >>extra fast>>
 Pitch:
-
 __extra low__
 _low_
 medium
 ^high^
 ^^extra high^^
-
-[extra loud, fast, and high](vrp: 555) or
-[extra loud, fast, and high](v: 5, r: 5, p: 5)
+[extra loud, fast, and high](vrp: 555)
 ```
 
 SSML:
 
 ```html
-Volume:
-
-<prosody volume="silent">silent</prosody>
-<prosody volume="x-soft">extra soft</prosody>
-<prosody volume="soft">soft</prosody>
-medium
-<prosody volume="loud">loud</prosody>
-<prosody volume="x-loud">extra loud</prosody>
-
-Rate:
-
-<prosody rate="x-slow">extra slow</prosody>
-<prosody rate="slow">slow</prosody>
-medium
-<prosody rate="fast">fast</prosody>
-<prosody rate="x-fast">extra fast</prosody>
-
-Pitch:
-
-<prosody pitch="x-low">extra low</prosody>
-<prosody pitch="low">low</prosody>
-medium
-<prosody pitch="high">high</prosody>
-<prosody pitch="x-high">extra high</prosody>
-
-<prosody volume="x-loud" rate="x-fast" pitch="x-high">extra loud, fast, and high</prosody> or
-<prosody volume="x-loud" rate="x-fast" pitch="x-high">extra loud, fast, and high</prosody>
+<s>Volume:</s>
+<s><prosody volume='silent'>silent</prosody></s>
+<s><prosody volume='x-soft'>extra soft</prosody></s>
+<s><prosody volume='soft'>soft</prosody></s>
+<s>medium</s>
+<s><prosody volume='loud'>loud</prosody></s>
+<s><prosody volume='x-loud'>extra loud</prosody></s>
+<s>Rate:</s>
+<s><prosody rate='x-slow'>extra slow</prosody></s>
+<s><prosody rate='slow'>slow</prosody></s>
+<s>medium</s>
+<s>fast: <prosody rate='fast'>fast</prosody></s>
+<s>extra fast: <prosody rate='x-fast'>extra fast</prosody></s>
+<s>Pitch:</s>
+<s><prosody pitch='x-low'>extra low</prosody></s>
+<s><prosody pitch='low'>low</prosody></s>
+<s>medium</s>
+<s><prosody pitch='high'>high</prosody></s>
+<s><prosody pitch='x-high'>extra high</prosody></s>
+<s><prosody rate='x-fast' pitch='x-high' volume='x-loud'>extra loud, fast, and high</prosody></s>
 ```
 
 The shortcuts are listed first. While they can be combined, sometimes it's easier and shorter to just use

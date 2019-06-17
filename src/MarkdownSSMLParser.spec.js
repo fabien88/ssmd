@@ -1,4 +1,6 @@
-const { expect } = require("chai");
+const {
+  expect
+} = require("chai");
 const ssmd = require("./MarkdownSSMLParser");
 
 const fs = require("fs");
@@ -10,23 +12,28 @@ const testInputs = [];
 const expectedOutputs = [];
 for (let i = 1; i < tree.length; ++i) {
   const [blockType, blockValue] = tree[i - 1];
+
   if (blockType === "para" && blockValue === "SSMD:") {
-    testInputs.push(tree[i][1][1]);
+    testInputs.push(
+      R.compose(
+        R.replace(/(\n|\\n)/g, "\n")
+      )(tree[i][1][1] || tree[i][2]));
   }
   if (blockType === "para" && blockValue === "SSML:") {
     expectedOutputs.push(
       R.compose(
         R.replace(/html\n/, ""),
-        R.replace(/\n$/, "")
-      )(tree[i][1][1])
+        R.replace(/\n$/, ""),
+        R.replace(/\\n/g, "")
+      )(tree[i][1][1] || tree[i][2])
     );
   }
 }
-
 const allTests = R.zip(testInputs, expectedOutputs);
 
 describe("specParser", () => {
   R.forEach(([input, expected]) => {
+
     if (!input) {
       return;
     }
