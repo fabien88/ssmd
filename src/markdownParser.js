@@ -18,44 +18,68 @@ parser.addRule(/\*(.+?)\*/gi, (tag, text) => ({
 
 // Volume
 parser.addRule(/~(.+?)~/gi, (tag, text) => ({
-  type: s => s.prosody({ volume: "silent" }, text)
+  type: s => s.prosody({
+    volume: "silent"
+  }, text)
 }));
 parser.addRule(/-(.+?)-/gi, (tag, text) => ({
-  type: s => s.prosody({ volume: "soft" }, text)
+  type: s => s.prosody({
+    volume: "soft"
+  }, text)
 }));
 parser.addRule(/\+\+(.+?)\+\+/gi, (tag, text) => ({
-  type: s => s.prosody({ volume: "x-loud" }, text)
+  type: s => s.prosody({
+    volume: "x-loud"
+  }, text)
 }));
 parser.addRule(/\+(.+?)\+/gi, (tag, text) => ({
-  type: s => s.prosody({ volume: "loud" }, text)
+  type: s => s.prosody({
+    volume: "loud"
+  }, text)
 }));
 
 // Rate
 parser.addRule(/<<(.+?)<</gi, (tag, text) => ({
-  type: s => s.prosody({ rate: "x-slow" }, text)
+  type: s => s.prosody({
+    rate: "x-slow"
+  }, text)
 }));
 parser.addRule(/<(.+?)</gi, (tag, text) => ({
-  type: s => s.prosody({ rate: "slow" }, text)
+  type: s => s.prosody({
+    rate: "slow"
+  }, text)
 }));
 parser.addRule(/>>(.+?)>>/gi, (tag, text) => ({
-  type: s => s.prosody({ rate: "x-fast" }, text)
+  type: s => s.prosody({
+    rate: "x-fast"
+  }, text)
 }));
 parser.addRule(/>(.+?)>/gi, (tag, text) => ({
-  type: s => s.prosody({ rate: "fast" }, text)
+  type: s => s.prosody({
+    rate: "fast"
+  }, text)
 }));
 
 // Pitch
 parser.addRule(/__(.+?)__/gi, (tag, text) => ({
-  type: s => s.prosody({ pitch: "x-low" }, text)
+  type: s => s.prosody({
+    pitch: "x-low"
+  }, text)
 }));
 parser.addRule(/_(.+?)_/gi, (tag, text) => ({
-  type: s => s.prosody({ pitch: "low" }, text)
+  type: s => s.prosody({
+    pitch: "low"
+  }, text)
 }));
 parser.addRule(/\^\^(.+?)\^\^/gi, (tag, text) => ({
-  type: s => s.prosody({ pitch: "x-high" }, text)
+  type: s => s.prosody({
+    pitch: "x-high"
+  }, text)
 }));
 parser.addRule(/\^(.+?)\^/gi, (tag, text) => ({
-  type: s => s.prosody({ pitch: "high" }, text)
+  type: s => s.prosody({
+    pitch: "high"
+  }, text)
 }));
 
 // Pause and break
@@ -88,8 +112,7 @@ const rate = ["", "x-slow", "slow", "medium", "fast", "x-fast"];
 const pitch = ["", "x-low", "low", "medium", "high", "x-high"];
 addParseFunc("vrp", (s, text, param) => {
   const [vIdx, rIdx, pIdx] = param;
-  return s.prosody(
-    {
+  return s.prosody({
       volume: volumes[vIdx],
       rate: rate[rIdx],
       pitch: pitch[pIdx]
