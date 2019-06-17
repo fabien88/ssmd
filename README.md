@@ -44,6 +44,7 @@ This version is still under development. See below which essential SSML construc
 - [x] Prosody
 - [x] Say-as
 - [ ] Substitution
+- [x] Audio
 - [ ] Extensions
 
 ### Tests
