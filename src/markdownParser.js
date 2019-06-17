@@ -4,6 +4,57 @@
 const Parser = require("simple-text-parser");
 const parser = new Parser();
 
+
+// Handle functions like extensions etc...
+const addParseFunc = (name, callback) => {
+  const regex = new RegExp(`\\[(.+?)\\]\\(${name}: (\\S+)\\)`, "gi");
+  parser.addRule(regex, (tag, text) => {
+    const [, , param] = new RegExp(regex, "gi").exec(tag);
+    return {
+      type: s => callback(s, text, param)
+    };
+  });
+};
+
+// Function for both volume rate and pitch
+const volumes = ["silent", "x-soft", "soft", "medium", "loud", "x-loud"];
+const rate = ["", "x-slow", "slow", "medium", "fast", "x-fast"];
+const pitch = ["", "x-low", "low", "medium", "high", "x-high"];
+addParseFunc("vrp", (s, text, param) => {
+  const [vIdx, rIdx, pIdx] = param;
+  return s.prosody({
+      volume: volumes[vIdx],
+      rate: rate[rIdx],
+      pitch: pitch[pIdx]
+    },
+    text
+  );
+});
+
+addParseFunc("as", (s, text, params) =>
+  s.sayAs({
+    word: text,
+    interpret: params
+  })
+);
+
+const extensions = {
+  whisper: (text, s) => s.whisper(text),
+  audio: (text, s) => s.audio(text)
+};
+addParseFunc("ext", (s, text, extension) => extensions[extension](text, s));
+
+// Handle audio (ie. link in parentheses)
+const audioRegex = new RegExp(`\\[(.*?)\\]\\((\\S+) ?(.*)\\)`, "gi");
+parser.addRule(audioRegex, (tag, text) => {
+  const [, desc, param, alt] = new RegExp(audioRegex).exec(tag);
+  return {
+    type: "text",
+    text: `<audio src="${param}">${desc && `<desc>${desc}</desc>`}${alt}</audio>`
+  };
+});
+
+
 // Emphasis
 parser.addRule(/\*\*(.+?)\*\*/gi, (tag, text) => ({
   type: s => s.emphasis("strong", text)
@@ -20,6 +71,11 @@ parser.addRule(/\*(.+?)\*/gi, (tag, text) => ({
 parser.addRule(/~(.+?)~/gi, (tag, text) => ({
   type: s => s.prosody({
     volume: "silent"
+  }, text)
+}));
+parser.addRule(/--(.+?)--/gi, (tag, text) => ({
+  type: s => s.prosody({
+    volume: "x-soft"
   }, text)
 }));
 parser.addRule(/-(.+?)-/gi, (tag, text) => ({
@@ -95,43 +151,6 @@ parser.addRule(/(\.\.\.)/gi, () => ({
   type: s => s.pause("1000ms")
 }));
 
-// Handle functions like extensions etc...
-const addParseFunc = (name, callback) => {
-  const regex = new RegExp(`\\[(.+?)\\]\\(${name}: (\\S+)\\)`, "gi");
-  parser.addRule(regex, (tag, text) => {
-    const [, , param] = new RegExp(regex, "gi").exec(tag);
-    return {
-      type: s => callback(s, text, param)
-    };
-  });
-};
 
-// Function for both volume rate and pitch
-const volumes = ["silent", "x-soft", "soft", "medium", "loud", "x-loud"];
-const rate = ["", "x-slow", "slow", "medium", "fast", "x-fast"];
-const pitch = ["", "x-low", "low", "medium", "high", "x-high"];
-addParseFunc("vrp", (s, text, param) => {
-  const [vIdx, rIdx, pIdx] = param;
-  return s.prosody({
-      volume: volumes[vIdx],
-      rate: rate[rIdx],
-      pitch: pitch[pIdx]
-    },
-    text
-  );
-});
-
-addParseFunc("as", (s, text, params) =>
-  s.sayAs({
-    word: text,
-    interpret: params
-  })
-);
-
-const extensions = {
-  whisper: (text, s) => s.whisper(text),
-  audio: (text, s) => s.audio(text)
-};
-addParseFunc("ext", (s, text, extension) => extensions[extension](text, s));
 
 module.exports = parser;
