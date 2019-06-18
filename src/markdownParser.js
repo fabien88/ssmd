@@ -2,8 +2,8 @@
  * Parse markdown syntax and return ssml equivalent
  */
 const Parser = require("simple-text-parser");
+const R = require('ramda');
 const parser = new Parser();
-
 
 // Handle functions like extensions etc...
 const addParseFunc = (name, callback) => {
@@ -150,6 +150,41 @@ parser.addRule(new RegExp(pauseRegex), tag => {
 parser.addRule(/(\.\.\.)/gi, () => ({
   type: s => s.pause("1000ms")
 }));
+
+function required(field) {
+  throw new Error(field + ' is required in headingLevel config !');
+}
+
+// Heading, by default, use emphasis and break
+parser.addRule(/^\#+\s*(.+)/gi, (tag, text) => {
+  // determine how many # we have
+  const headingLevel = /^(#+)/.exec(tag)[1].length;
+
+  // Apply tag on current speech object
+  const execTag = (s, {
+    tag = required('tag'),
+    value
+  }) => {
+    value = R.defaultTo([], value);
+    if (!R.is(Array, value)) {
+      value = [value];
+    }
+    return s[tag](...[...value, text]);
+  }
+
+  return {
+    type: (s, {
+      headingLevels
+    }) => {
+      if (!headingLevels[headingLevel]) {
+        return s.say(tag);
+      }
+      return R.reduce(execTag, s, headingLevels[headingLevel])
+    }
+
+  }
+
+});
 
 
 

@@ -13,6 +13,7 @@ SSMD is mapped to SSML using the following rules.
 - [Prosody](#prosody)
 - [Say-as](#say-as)
 - [Audio](#audio)
+- [Headings](#headings)
 - [Extensions](#extensions)
 
 ---
@@ -93,9 +94,9 @@ SSMD:
 ```
 First prepare the ingredients.
 Don't forget to wash them first.
-\n
+
 Lastly mix them all together.
-\n
+
 Don't forget to do the dishes after!
 ```
 
@@ -104,9 +105,9 @@ SSML:
 ```html
 <p><s>First prepare the ingredients.</s>
 <s>Don't forget to wash them first.</s></p>
-\n
+
 <p>Lastly mix them all together.</p>
-\n
+
 <p>Don't forget to do the dishes after!</p>
 ```
 
@@ -239,6 +240,53 @@ SSML:
 <s>Here's a fun sound <audio src="https://example.com/sounds/boing.mp3"><desc>boing</desc></audio></s>
 <s><audio src="cat_purr_close.ogg"><desc>a cat purring</desc>Purr (sound didn't load)</audio></s>
 <s><audio src="miaou.mp3"></audio></s>
+```
+
+---
+
+### Headings
+
+Heading tag adds emphasis and a small break by default, but you can configure it as you like :  
+
+```
+const ssml = ssmd("hello *SSMD*!", {
+    headingLevels: {
+    1: [
+        { tag: "emphasis", value: 'strong' },
+        { tag: "pause", value: '300ms' },
+    ],
+
+    // if we ommit key "2", it will uses default params for heading 2
+
+    3: [
+        { tag: "pause", value: '50ms' },
+        { tag: "prosody", value: {rate: 'slow'} },
+        { tag: "pause", value: '200ms' },
+    ],
+  }
+});
+```
+
+You can use any tag and value referenced from [ssml-builder project](https://www.npmjs.com/package/ssml-builder/v/0.4.3)  
+
+SSMD:
+
+```
+# Heading 1
+## Heading 2
+##Heading 2
+### Heading 3
+#### Heading 4 // Not handled by default 
+```
+
+SSML:
+
+```html
+<s><emphasis level='strong'>Heading 1</emphasis> <break time='300ms'/></s>
+<s><emphasis level='moderate'>Heading 2</emphasis> <break time='75ms'/></s>
+<s><emphasis level='moderate'>Heading 2</emphasis> <break time='75ms'/></s>
+<s><break time='50ms'/> <prosody rate='slow'>Heading 3</prosody> <break time='200ms'/></s>
+<s>#### Heading 4 // Not handled by default</s>
 ```
 
 ---
