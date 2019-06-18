@@ -16,7 +16,8 @@
   "dependencies": {
     "ramda": "^0.26.1",
     "simple-text-parser": "^1.0.0",
-    "ssml-builder": "^0.4.3"
+    "ssml-builder": "^0.4.3",
+    "lodash": ">=4.17.11"
   },
   "devDependencies": {
     "chai": "4.2.0",
