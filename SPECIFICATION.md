@@ -221,8 +221,8 @@ SSML:
 
 Audio
 
-Syntax :  [description of sound](urlOfSound.mp3 alternative text)
-Description text is used for display 
+Syntax :  [description of sound](urlOfSound.mp3 alternative text)  
+Description text is used for display  
 Following the url, an alternate text may be provided in case the file is not readable
 
 SSMD:
