@@ -5,31 +5,21 @@ const ssmd = require("./MarkdownSSMLParser");
 
 const fs = require("fs");
 const R = require("ramda");
-const md = require("markdown").markdown;
-const tree = md.parse(fs.readFileSync("./SPECIFICATION.md", "utf8"));
 
+const specsInput = fs.readFileSync("./SPECIFICATION.md", "utf8");
 const testInputs = [];
 const expectedOutputs = [];
-for (let i = 1; i < tree.length; ++i) {
-  const [blockType, blockValue] = tree[i - 1];
 
-  if (blockType === "para" && blockValue === "SSMD:") {
-    testInputs.push(
-      R.compose(
-        R.replace(/(\n|\\n)/g, "\n")
-      )(tree[i][1][1] || tree[i][2]));
-  }
-  if (blockType === "para" && blockValue === "SSML:") {
-    expectedOutputs.push(
-      R.compose(
-        R.replace(/html\n/, ""),
-        R.replace(/\n$/, ""),
-        R.replace(/\\n/g, "")
-      )(tree[i][1][1] || tree[i][2])
-    );
-  }
+const parser = /SSMD:.*?```\n(.*?)\n```.*?SSML:.*?```(html)?\n(.*?)\n```/gis;
+let result = null;
+while ((result = parser.exec(specsInput)) !== null) {
+  testInputs.push(result[1]);
+  expectedOutputs.push(result[3]);
+
 }
+
 const allTests = R.zip(testInputs, expectedOutputs);
+
 
 describe("specParser", () => {
   R.forEach(([input, expected]) => {
@@ -38,7 +28,37 @@ describe("specParser", () => {
       return;
     }
     it("Works with " + input, () => {
-      const actual = ssmd(input, false);
+      const actual = ssmd(input, {
+        outputSpeakTag: false,
+        headingLevels: {
+          1: [{
+              tag: "emphasis",
+              value: 'strong'
+            },
+            {
+              tag: "pause",
+              value: '300ms'
+            },
+          ],
+
+          // 2: // for example, ommiting key 2 will use default params for heading 2
+
+          3: [{
+              tag: "pause",
+              value: '50ms'
+            }, {
+              tag: "prosody",
+              value: {
+                rate: 'slow'
+              }
+            },
+            {
+              tag: "pause",
+              value: '200ms'
+            },
+          ],
+        }
+      });
       if (expected.startsWith("<speak>")) {
         expect(actual).to.be.eql(
           R.compose(
@@ -52,3 +72,30 @@ describe("specParser", () => {
     });
   }, allTests);
 });
+
+describe("LegacyConfig", () => {
+  it("Should work with legacy parameter set to false", () => {
+    const actual = ssmd("text", false);
+    expect(actual).to.be.eql("text");
+  })
+  it("Should work with legacy parameter set to true", () => {
+    const actual = ssmd("text", true);
+    expect(actual).to.be.eql("<speak>text</speak>");
+  })
+  it("Should work with legacy parameter set to undefined", () => {
+    const actual = ssmd("text", undefined);
+    expect(actual).to.be.eql("<speak>text</speak>");
+  })
+  it("Should work with legacy parameter unset", () => {
+    const actual = ssmd("text");
+    expect(actual).to.be.eql("<speak>text</speak>");
+  })
+})
+describe("Config", () => {
+  it("Should work with config parameter", () => {
+    const actual = ssmd("text", {
+      outputSpeakTag: true
+    });
+    expect(actual).to.be.eql("<speak>text</speak>");
+  })
+})
