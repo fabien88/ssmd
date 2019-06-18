@@ -249,8 +249,8 @@ SSML:
 Heading tag adds emphasis and a small break by default, but you can configure it as you like :  
 
 ```
-const ssml = ssmd("hello *SSMD*!", {
-    headingLevels: {
+const ssml = ssmd("# My first heading 1", {
+  headingLevels: {
     1: [
         { tag: "emphasis", value: 'strong' },
         { tag: "pause", value: '300ms' },
@@ -268,6 +268,11 @@ const ssml = ssmd("hello *SSMD*!", {
 ```
 
 You can use any tag and value referenced from [ssml-builder project](https://www.npmjs.com/package/ssml-builder/v/0.4.3)  
+
+By default headings give :  
+* \# Heading 1 -> strong emphasis and a 100ms pause after  
+* \# Heading 2 -> moderate emphasis and a 75ms pause after  
+* \# Heading 3 -> reduced emphasis and a 50ms pause after  
 
 SSMD:
 
