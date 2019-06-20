@@ -156,9 +156,9 @@ function required(field) {
 }
 
 // Heading, by default, use emphasis and break
-parser.addRule(/^\#+\s*(.+)/gi, (tag, text) => {
+parser.addRule(/^(#+)\s*(.+)/gi, (tag, hashes, text) => {
   // determine how many # we have
-  const headingLevel = /^(#+)/.exec(tag)[1].length;
+  const headingLevel = hashes.length;
 
   // Apply tag on current speech object
   const execTag = (s, {
