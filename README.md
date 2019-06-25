@@ -26,7 +26,52 @@ const ssml = ssmd("hello *SSMD*!");
 
 console.log(ssml);
 
-# <speak>hello <emphasis>SSMD</emphasis>!</speak>
+```
+
+```xml
+<speak>
+    hello <emphasis>SSMD</emphasis>!
+</speak>
+```
+
+## Advanced usage
+
+```js
+const config = {
+  /* if you don't want to have <speak></speak> included by default */
+  outputSpeakTag: false, 
+  
+  /* Customize heading to SSML conversion, default value is specified in specification.md */
+  headingLevels: { 
+    1: [{
+        tag: "emphasis",
+        value: 'strong'
+      },
+      {
+        tag: "pause",
+        value: '300ms'
+      },
+    ]
+   }
+};
+ssmd(`
+  # My first heading 1
+  Hello world
+  `,
+  config
+)
+```
+
+```xml
+  <s>
+     <emphasis level='strong'>
+       My first heading 1
+     </emphasis> 
+     <break time=\'300ms\'/>
+   </s>
+   <s>
+     Hello world
+   </s>
 ```
 
 **Note:**
