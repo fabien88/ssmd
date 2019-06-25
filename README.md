@@ -34,13 +34,13 @@ console.log(ssml);
 </speak>
 ```
 
-## Advanced usage
+## Options
 
 ```js
 const config = {
   /* if you don't want to have <speak></speak> included by default */
   outputSpeakTag: false, 
-  
+  prettyPrint: true,
   /* Customize heading to SSML conversion, default value is specified in specification.md */
   headingLevels: { 
     1: [{
@@ -73,6 +73,10 @@ ssmd(`
      Hello world
    </s>
 ```
+
+- `outputSpeakTag` (Boolean, default=`true`) Set it to false if you don't want to have <speak></speak> tags included.
+- `prettyPrint` (String, default=`true`) Indent the resulting ssml.
+- `headingLevels` (Object) Customize the way heading tags will be transformed into SSML, default value is specified in [specification.md#headings](SPECIFICATION.md#headings)
 
 **Note:**
 
