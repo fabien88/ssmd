@@ -1,10 +1,11 @@
 const R = require("ramda");
 const AmazonSpeech = require("ssml-builder/amazon_speech");
 const markdownParser = require("./markdownParser");
-
+const xmlFormatter = require('xml-formatter');
 
 const defaultConfig = {
   outputSpeakTag: true,
+  prettyPrint: true,
   headingLevels: {
     1: [{
         tag: "emphasis",
@@ -45,7 +46,8 @@ const ssmd = (text, config = {}) => {
   }
   const configMerged = R.mergeDeepRight(defaultConfig, config);
   const {
-    outputSpeakTag
+    outputSpeakTag,
+    prettyPrint
   } = configMerged;
 
   const parseGeneric = (separator, tag, subCall) => text => {
@@ -90,10 +92,14 @@ const ssmd = (text, config = {}) => {
   // Will add p tag for each paragraph
   const parseParagraphs = parseGeneric("\n\n", "p", parseSentences);
 
+  let ssmlOutput = parseParagraphs(text);
   if (outputSpeakTag) {
-    return `<speak>${parseParagraphs(text)}</speak>`;
+    ssmlOutput = `<speak>${ssmlOutput}</speak>`
   }
-  return `${parseParagraphs(text)}`;
+  if (prettyPrint) {
+    ssmlOutput = xmlFormatter(ssmlOutput) || ssmlOutput; // in case xmlFormatter return empty string
+  }
+  return ssmlOutput;
 };
 
 module.exports = ssmd;

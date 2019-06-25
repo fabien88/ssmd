@@ -14,10 +14,11 @@
     "markdown"
   ],
   "dependencies": {
+    "lodash": ">=4.17.11",
     "ramda": "^0.26.1",
     "simple-text-parser": "^1.0.0",
     "ssml-builder": "^0.4.3",
-    "lodash": ">=4.17.11"
+    "xml-formatter": "^1.1.0"
   },
   "devDependencies": {
     "chai": "4.2.0",
