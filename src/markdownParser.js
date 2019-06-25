@@ -156,7 +156,7 @@ function required(field) {
 }
 
 // Heading, by default, use emphasis and break
-parser.addRule(/^(#+)\s*(.+)/gi, (tag, hashes, text) => {
+parser.addRule(/^\s*(#+)\s*(.+)/gi, (tag, hashes, text) => {
   // determine how many # we have
   const headingLevel = hashes.length;
 
