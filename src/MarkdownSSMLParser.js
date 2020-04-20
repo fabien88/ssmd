@@ -41,7 +41,8 @@ const ssmd = (text, config = {}) => {
 
   if (config === false) {
     config = {
-      outputSpeakTag: false
+      outputSpeakTag: false,
+      prettyPrint: false
     }
   }
   const configMerged = R.mergeDeepRight(defaultConfig, config);
