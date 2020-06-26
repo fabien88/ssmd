@@ -1,6 +1,6 @@
 {
   "name": "ssmd",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Speech Synthesis Markdown (SSMD) is a lightweight alternative syntax for Speech Synthesis Markup Language (SSML)",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
     "markdown"
   ],
   "dependencies": {
-    "lodash": ">=4.17.11",
+    "lodash": "^4.17.15",
     "ramda": "^0.26.1",
-    "simple-text-parser": "^1.0.0",
+    "simple-text-parser": "fabien88/simple-text-parser",
     "ssml-builder": "^0.4.3",
     "xml-formatter": "^1.1.0"
   },
@@ -25,7 +25,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
-    "mocha": "^6.1.4"
+    "mocha": "^8.0.1"
   },
   "author": "Fabien Lenoir",
   "license": "MIT",
