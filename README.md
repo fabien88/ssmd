@@ -20,7 +20,7 @@ npm install ssmd
 ## Usage
 
 ```js
-const ssmd = require('ssmd');
+import { ssmd } from 'ssmd';
 
 const ssml = ssmd("hello *SSMD*!");
 

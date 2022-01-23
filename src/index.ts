@@ -1,0 +1,1 @@
+export { ssmd } from "./MarkdownSSMLParser";
