@@ -1,3 +1,4 @@
+import { SSMDConfig, SSMDConfigAudioDetection } from "./config.interface";
 import AmazonSpeech = require("ssml-builder/amazon_speech");
 import { parser as markdownParser } from "./markdownParser";
 import xmlFormatter = require("xml-formatter");
@@ -14,12 +15,6 @@ import {
   reduce,
 } from "ramda";
 
-export interface SSMDConfig {
-  outputSpeakTag?: boolean;
-  prettyPrint?: boolean;
-  headingLevels?: {};
-}
-
 export const formatOptions = {
   indentation: "    ",
   whiteSpaceAtEndOfSelfclosingTag: true,
@@ -31,6 +26,24 @@ export const formatOptions = {
 const defaultConfig: SSMDConfig = {
   outputSpeakTag: true,
   prettyPrint: true,
+  audio: {
+    detectionStrategy: SSMDConfigAudioDetection.SMART_DETECT,
+    audioExtensions: [
+      ".3gp",
+      ".aa",
+      ".aac",
+      ".aiff",
+      ".flac",
+      ".m4a",
+      ".mp3",
+      ".ogg",
+      ".mogg",
+      ".oga",
+      ".wav",
+      ".wma",
+      ".webm",
+    ],
+  },
   headingLevels: {
     1: [
       {
@@ -65,13 +78,7 @@ const defaultConfig: SSMDConfig = {
   },
 };
 
-const ssmd = (text: string, config: SSMDConfig = {}) => {
-  if (config === false) {
-    config = {
-      outputSpeakTag: false,
-      prettyPrint: false,
-    };
-  }
+const ssmd = (text: string, config = defaultConfig) => {
   const configMerged = mergeDeepRight(defaultConfig, config);
   const { outputSpeakTag, prettyPrint } = configMerged;
 
@@ -107,7 +114,7 @@ const ssmd = (text: string, config: SSMDConfig = {}) => {
         return s;
       },
       [],
-      markdownParser.toTree() && markdownParser.toTree(sentence)
+      markdownParser.parser.toTree() && markdownParser.toTree(sentence)
     ).join("");
 
   // Will add s tag for each sentence
