@@ -6,7 +6,8 @@
   "scripts": {
     "test-unit": "NODE_ENV=test mocha './src/**/*.spec.js'",
     "test-watch": "NODE_ENV=test mocha --watch --extension md --extension js './src/**/*.spec.js'",
-    "test": "npm run test-unit"
+    "test": "npm run test-unit",
+    "publish": "npm publish"
   },
   "keywords": [
     "SSMD",
@@ -14,9 +15,9 @@
     "markdown"
   ],
   "dependencies": {
+    "simple-text-parser": "^2.0.0",
     "lodash": "^4.17.15",
     "ramda": "^0.26.1",
-    "@fabien88/simple-text-parser": "^1.0.0",
     "ssml-builder": "^0.4.3",
     "xml-formatter": "^1.1.0"
   },
@@ -25,7 +26,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
-    "mocha": "^8.0.1"
+    "mocha": "^11.1.0"
   },
   "author": "Fabien Lenoir",
   "license": "MIT",

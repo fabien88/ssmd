@@ -6,15 +6,17 @@ Here we specify how Speech Synthesis Markdown (SSMD) works.
 
 SSMD is mapped to SSML using the following rules.
 
-- [Text](#text)
-- [Emphasis](#emphasis)
-- [Break](#break)
-- [Paragraph](#paragraph)
-- [Prosody](#prosody)
-- [Say-as](#say-as)
-- [Audio](#audio)
-- [Headings](#headings)
-- [Extensions](#extensions)
+- [SSMD Specification](#ssmd-specification)
+  - [Syntax](#syntax)
+    - [Text](#text)
+    - [Emphasis](#emphasis)
+    - [Break](#break)
+    - [Paragraph](#paragraph)
+    - [Prosody](#prosody)
+    - [Say-as](#say-as)
+    - [Audio](#audio)
+    - [Headings](#headings)
+    - [Extensions](#extensions)
 
 ---
 
@@ -42,13 +44,15 @@ SSML:
 SSMD:
 
 ```
-*command* & conquer
+*command* & conquer 
+**_command_** & conquer 
 ```
 
 SSML:
 
 ```html
-<emphasis level='moderate'>command</emphasis> & conquer
+<s><emphasis level='moderate'>command</emphasis> & conquer</s>
+<s><emphasis level='strong'>command</emphasis> & conquer</s>
 ```
 
 ---

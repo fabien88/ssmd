@@ -1,7 +1,7 @@
 /**
  * Parse markdown syntax and return ssml equivalent
  */
-const Parser = require("@fabien88/simple-text-parser");
+const { Parser } = require("simple-text-parser");
 const R = require("ramda");
 const parser = new Parser();
 
@@ -58,6 +58,9 @@ parser.addRule(audioRegex, (tag, text) => {
 });
 
 // Emphasis
+parser.addRule(/\*\*_(.+?)_\*\*/gi, (tag, text) => ({
+  type: (s) => s.emphasis("strong", text),
+}));
 parser.addRule(/\*\*(.+?)\*\*/gi, (tag, text) => ({
   type: (s) => s.emphasis("strong", text),
 }));
